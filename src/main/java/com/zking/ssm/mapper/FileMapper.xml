@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm.mapper.FileMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm.model.File" >
+    <constructor >
+      <idArg column="F_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="O_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="F_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="F_type" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="F_time" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="F_bak" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="F_url" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    F_id, O_id, F_name, F_type, F_time, F_bak, F_url
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from o_file
+    where F_id = #{fId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from o_file
+    where F_id = #{fId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zking.ssm.model.File" >
+    insert into o_file (F_id, O_id, F_name, 
+      F_type, F_time, F_bak, 
+      F_url)
+    values (#{fId,jdbcType=INTEGER}, #{oId,jdbcType=VARCHAR}, #{fName,jdbcType=VARCHAR}, 
+      #{fType,jdbcType=VARCHAR}, #{fTime,jdbcType=VARCHAR}, #{fBak,jdbcType=VARCHAR}, 
+      #{fUrl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm.model.File" >
+    insert into o_file
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fId != null" >
+        F_id,
+      </if>
+      <if test="oId != null" >
+        O_id,
+      </if>
+      <if test="fName != null" >
+        F_name,
+      </if>
+      <if test="fType != null" >
+        F_type,
+      </if>
+      <if test="fTime != null" >
+        F_time,
+      </if>
+      <if test="fBak != null" >
+        F_bak,
+      </if>
+      <if test="fUrl != null" >
+        F_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fId != null" >
+        #{fId,jdbcType=INTEGER},
+      </if>
+      <if test="oId != null" >
+        #{oId,jdbcType=VARCHAR},
+      </if>
+      <if test="fName != null" >
+        #{fName,jdbcType=VARCHAR},
+      </if>
+      <if test="fType != null" >
+        #{fType,jdbcType=VARCHAR},
+      </if>
+      <if test="fTime != null" >
+        #{fTime,jdbcType=VARCHAR},
+      </if>
+      <if test="fBak != null" >
+        #{fBak,jdbcType=VARCHAR},
+      </if>
+      <if test="fUrl != null" >
+        #{fUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.ssm.model.File" >
+    update o_file
+    <set >
+      <if test="oId != null" >
+        O_id = #{oId,jdbcType=VARCHAR},
+      </if>
+      <if test="fName != null" >
+        F_name = #{fName,jdbcType=VARCHAR},
+      </if>
+      <if test="fType != null" >
+        F_type = #{fType,jdbcType=VARCHAR},
+      </if>
+      <if test="fTime != null" >
+        F_time = #{fTime,jdbcType=VARCHAR},
+      </if>
+      <if test="fBak != null" >
+        F_bak = #{fBak,jdbcType=VARCHAR},
+      </if>
+      <if test="fUrl != null" >
+        F_url = #{fUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where F_id = #{fId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zking.ssm.model.File" >
+    update o_file
+    set O_id = #{oId,jdbcType=VARCHAR},
+      F_name = #{fName,jdbcType=VARCHAR},
+      F_type = #{fType,jdbcType=VARCHAR},
+      F_time = #{fTime,jdbcType=VARCHAR},
+      F_bak = #{fBak,jdbcType=VARCHAR},
+      F_url = #{fUrl,jdbcType=VARCHAR}
+    where F_id = #{fId,jdbcType=INTEGER}
+  </update>
+</mapper>

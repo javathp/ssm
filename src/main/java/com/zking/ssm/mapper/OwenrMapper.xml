@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm.mapper.OwenrMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm.model.Owenr" >
+    <constructor>
+      <idArg column="O_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="O_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="O_tel" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="F_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="O_room" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="H_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="T_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="C_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="O_state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="O_bak" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <resultMap id="OwenrVolist" type="com.zking.ssm.vo.OwenrVo" >
+      <id column="O_id" property="oId" javaType="java.lang.String" />
+      <result column="H_name" property="hName" javaType="java.lang.String" />
+      <result column="O_room" property="oRoom" javaType="java.lang.String" />
+      <result column="T_name" property="tName" javaType="java.lang.String" />
+      <result column="F_money" property="fMoney" javaType="java.lang.Float" />
+      <result column="O_name" property="oName" javaType="java.lang.String" />
+      <result column="O_tel" property="oTel" javaType="java.lang.String" />
+      <result column="Fee_time" property="FeeTime" javaType="java.lang.String" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    O_id, O_name, O_tel, F_id, O_room, H_id, T_id, C_id, O_state, O_bak
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from w_owenr
+    where O_id = #{oId,jdbcType=VARCHAR}
+  </select>
+    <select id="listOwenr" resultMap="OwenrVolist" parameterType="com.zking.ssm.vo.OwenrVo">
+      select o.O_id,h.H_name,o.O_room,t.T_name,t.T_space*c.C_standard as F_money,o.O_name,o.O_tel,f.Fee_time from  w_owenr as o left join w_house as h on
+      o.H_id=h.H_id left join w_type as t on o.T_id=t.T_id left join w_cost as c on o.C_id=c.C_id left join w_fee as f on o.O_id=f.O_id where o.O_state=1
+      <if test="hName != null and ''!=hName">and h.H_name like CONCAT('%',#{hName,jdbcType=VARCHAR},'%') </if>
+      <if test="oName != null and ''!=oName">and o.O_name like CONCAT('%',#{oName,jdbcType=VARCHAR},'%')</if>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from w_owenr
+    where O_id = #{oId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zking.ssm.model.Owenr" >
+    insert into w_owenr (O_id, O_name, O_tel, 
+      F_id, O_room, H_id, T_id, 
+      C_id, O_bak)
+    values (#{oId,jdbcType=VARCHAR}, #{oName,jdbcType=VARCHAR}, #{oTel,jdbcType=VARCHAR}, 
+      #{fId,jdbcType=INTEGER}, #{oRoom,jdbcType=VARCHAR}, #{hId,jdbcType=INTEGER}, #{tId,jdbcType=INTEGER}, 
+      #{cId,jdbcType=INTEGER}, #{oBak,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm.model.Owenr" >
+    insert into w_owenr
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oId != null" >
+        O_id,
+      </if>
+      <if test="oName != null" >
+        O_name,
+      </if>
+      <if test="oTel != null" >
+        O_tel,
+      </if>
+      <if test="fId != null" >
+        F_id,
+      </if>
+      <if test="oRoom != null" >
+        O_room,
+      </if>
+      <if test="hId != null" >
+        H_id,
+      </if>
+      <if test="tId != null" >
+        T_id,
+      </if>
+      <if test="cId != null" >
+        C_id,
+      </if>
+      <if test="oState != null" >
+        O_state,
+      </if>
+      <if test="oBak != null" >
+        O_bak,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oId != null" >
+        #{oId,jdbcType=VARCHAR},
+      </if>
+      <if test="oName != null" >
+        #{oName,jdbcType=VARCHAR},
+      </if>
+      <if test="oTel != null" >
+        #{oTel,jdbcType=VARCHAR},
+      </if>
+      <if test="fId != null" >
+        #{fId,jdbcType=INTEGER},
+      </if>
+      <if test="oRoom != null" >
+        #{oRoom,jdbcType=VARCHAR},
+      </if>
+      <if test="hId != null" >
+        #{hId,jdbcType=INTEGER},
+      </if>
+      <if test="tId != null" >
+        #{tId,jdbcType=INTEGER},
+      </if>
+      <if test="cId != null" >
+        #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="oState != null" >
+        #{oState,jdbcType=INTEGER},
+      </if>
+      <if test="oBak != null" >
+        #{oBak,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.ssm.model.Owenr" >
+    update w_owenr
+    <set >
+      <if test="oName != null" >
+        O_name = #{oName,jdbcType=VARCHAR},
+      </if>
+      <if test="oTel != null" >
+        O_tel = #{oTel,jdbcType=VARCHAR},
+      </if>
+      <if test="fId != null" >
+        F_id = #{fId,jdbcType=INTEGER},
+      </if>
+      <if test="oRoom != null" >
+        O_room = #{oRoom,jdbcType=VARCHAR},
+      </if>
+      <if test="hId != null" >
+        H_id = #{hId,jdbcType=INTEGER},
+      </if>
+      <if test="tId != null" >
+        T_id = #{tId,jdbcType=INTEGER},
+      </if>
+      <if test="cId != null" >
+        C_id = #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="oState != null" >
+        O_state = #{oState,jdbcType=INTEGER},
+      </if>
+      <if test="oBak != null" >
+        O_bak = #{oBak,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where O_id = #{oId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zking.ssm.model.Owenr" >
+    update w_owenr
+    set O_name = #{oName,jdbcType=VARCHAR},
+      O_tel = #{oTel,jdbcType=VARCHAR},
+      F_id = #{fId,jdbcType=INTEGER},
+      O_room = #{oRoom,jdbcType=VARCHAR},
+      H_id = #{hId,jdbcType=INTEGER},
+      T_id = #{tId,jdbcType=INTEGER},
+      C_id = #{cId,jdbcType=INTEGER},
+      O_state = #{oState,jdbcType=INTEGER},
+      O_bak = #{oBak,jdbcType=VARCHAR}
+    where O_id = #{oId,jdbcType=VARCHAR}
+  </update>
+  <update id="updatestate" parameterType="owenr">
+    update w_owenr
+    set O_state=0
+    where O_id=#{oId,jdbcType=VARCHAR}
+  </update>
+</mapper>

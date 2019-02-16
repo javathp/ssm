@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm.mapper.HouseMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm.model.House" >
+    <constructor >
+      <idArg column="H_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="H_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="H_bak" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+
+  <resultMap id="row" type="com.zking.ssm.model.House" >
+      <id column="H_id" property="hId" javaType="java.lang.Integer" />
+      <result column="H_name" property="hName" javaType="java.lang.String" />
+      <result column="H_bak" property="hBak" javaType="java.lang.String" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    H_id, H_name, H_bak
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from w_house
+    where H_id = #{hId,jdbcType=INTEGER}
+  </select>
+
+  <select id="list" resultMap="row" parameterType="house">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM w_house
+    where 1=1
+  </select>
+  <select id="checkName" resultMap="row" parameterType="house">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM w_house
+    where H_name=#{hName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from w_house
+    where H_id = #{hId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zking.ssm.model.House" >
+    insert into w_house (H_id, H_name, H_bak
+      )
+    values (#{hId,jdbcType=INTEGER}, #{hName,jdbcType=VARCHAR}, #{hBak,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm.model.House" >
+    insert into w_house
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="hId != null" >
+        H_id,
+      </if>
+      <if test="hName != null" >
+        H_name,
+      </if>
+      <if test="hBak != null" >
+        H_bak,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="hId != null" >
+        #{hId,jdbcType=INTEGER},
+      </if>
+      <if test="hName != null" >
+        #{hName,jdbcType=VARCHAR},
+      </if>
+      <if test="hBak != null" >
+        #{hBak,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.ssm.model.House" >
+    update w_house
+    <set >
+      <if test="hName != null" >
+        H_name = #{hName,jdbcType=VARCHAR},
+      </if>
+      <if test="hBak != null" >
+        H_bak = #{hBak,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where H_id = #{hId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zking.ssm.model.House" >
+    update w_house
+    set H_name = #{hName,jdbcType=VARCHAR},
+      H_bak = #{hBak,jdbcType=VARCHAR}
+    where H_id = #{hId,jdbcType=INTEGER}
+  </update>
+</mapper>

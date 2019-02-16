@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zking.ssm.mapper.FeeMapper">
+  <resultMap id="BaseResultMap" type="com.zking.ssm.model.Fee">
+    <constructor>
+      <idArg column="Fee_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="O_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="C_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="Fee_Arrearage" javaType="java.lang.Float" jdbcType="REAL" />
+      <arg column="Fee_overdue" javaType="java.lang.Float" jdbcType="REAL" />
+      <arg column="Fee_way" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="Fee_time" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="Fee_receipt" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="Fee_bak" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="Fee_state" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    Fee_id, O_id, C_id, Fee_Arrearage, Fee_overdue, Fee_way, Fee_time, Fee_receipt, Fee_bak, 
+    Fee_state
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from w_fee
+    where Fee_id = #{feeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from w_fee
+    where Fee_id = #{feeId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zking.ssm.model.Fee">
+    insert into w_fee (Fee_id, O_id, C_id, 
+      Fee_Arrearage, Fee_overdue, Fee_way, 
+      Fee_time, Fee_receipt, Fee_bak
+      )
+    values (#{feeId,jdbcType=INTEGER}, #{oId,jdbcType=VARCHAR}, #{cId,jdbcType=INTEGER}, 
+      #{feeArrearage,jdbcType=REAL}, #{feeOverdue,jdbcType=REAL}, #{feeWay,jdbcType=VARCHAR}, 
+      #{feeTime,jdbcType=VARCHAR}, #{feeReceipt,jdbcType=VARCHAR}, #{feeBak,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm.model.Fee">
+    insert into w_fee
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="feeId != null">
+        Fee_id,
+      </if>
+      <if test="oId != null">
+        O_id,
+      </if>
+      <if test="cId != null">
+        C_id,
+      </if>
+      <if test="feeArrearage != null">
+        Fee_Arrearage,
+      </if>
+      <if test="feeOverdue != null">
+        Fee_overdue,
+      </if>
+      <if test="feeWay != null">
+        Fee_way,
+      </if>
+      <if test="feeTime != null">
+        Fee_time,
+      </if>
+      <if test="feeReceipt != null">
+        Fee_receipt,
+      </if>
+      <if test="feeBak != null">
+        Fee_bak,
+      </if>
+      <if test="feeState != null">
+        Fee_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="feeId != null">
+        #{feeId,jdbcType=INTEGER},
+      </if>
+      <if test="oId != null">
+        #{oId,jdbcType=VARCHAR},
+      </if>
+      <if test="cId != null">
+        #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="feeArrearage != null">
+        #{feeArrearage,jdbcType=REAL},
+      </if>
+      <if test="feeOverdue != null">
+        #{feeOverdue,jdbcType=REAL},
+      </if>
+      <if test="feeWay != null">
+        #{feeWay,jdbcType=VARCHAR},
+      </if>
+      <if test="feeTime != null">
+        #{feeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="feeReceipt != null">
+        #{feeReceipt,jdbcType=VARCHAR},
+      </if>
+      <if test="feeBak != null">
+        #{feeBak,jdbcType=VARCHAR},
+      </if>
+      <if test="feeState != null">
+        #{feeState,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.ssm.model.Fee">
+    update w_fee
+    <set>
+      <if test="oId != null">
+        O_id = #{oId,jdbcType=VARCHAR},
+      </if>
+      <if test="cId != null">
+        C_id = #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="feeArrearage != null">
+        Fee_Arrearage = #{feeArrearage,jdbcType=REAL},
+      </if>
+      <if test="feeOverdue != null">
+        Fee_overdue = #{feeOverdue,jdbcType=REAL},
+      </if>
+      <if test="feeWay != null">
+        Fee_way = #{feeWay,jdbcType=VARCHAR},
+      </if>
+      <if test="feeTime != null">
+        Fee_time = #{feeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="feeReceipt != null">
+        Fee_receipt = #{feeReceipt,jdbcType=VARCHAR},
+      </if>
+      <if test="feeBak != null">
+        Fee_bak = #{feeBak,jdbcType=VARCHAR},
+      </if>
+      <if test="feeState != null">
+        Fee_state = #{feeState,jdbcType=INTEGER},
+      </if>
+    </set>
+    where Fee_id = #{feeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zking.ssm.model.Fee">
+    update w_fee
+    set O_id = #{oId,jdbcType=VARCHAR},
+      C_id = #{cId,jdbcType=INTEGER},
+      Fee_Arrearage = #{feeArrearage,jdbcType=REAL},
+      Fee_overdue = #{feeOverdue,jdbcType=REAL},
+      Fee_way = #{feeWay,jdbcType=VARCHAR},
+      Fee_time = #{feeTime,jdbcType=VARCHAR},
+      Fee_receipt = #{feeReceipt,jdbcType=VARCHAR},
+      Fee_bak = #{feeBak,jdbcType=VARCHAR},
+      Fee_state = #{feeState,jdbcType=INTEGER}
+    where Fee_id = #{feeId,jdbcType=INTEGER}
+  </update>
+</mapper>

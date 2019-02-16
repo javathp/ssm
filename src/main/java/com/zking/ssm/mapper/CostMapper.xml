@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm.mapper.CostMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm.model.Cost" >
+    <constructor >
+      <idArg column="C_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="C_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="C_standard" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="C_bak" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+
+  <resultMap id="row" type="com.zking.ssm.model.Cost" >
+      <id column="C_id" property="cId" javaType="java.lang.Integer" />
+      <result column="C_name" property="cName" javaType="java.lang.String" />
+      <result column="C_standard" property="cStandard" javaType="java.lang.Float" />
+      <result column="C_bak" property="cBak" javaType="java.lang.String" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    C_id, C_name, C_standard, C_bak
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from w_cost
+    where C_id = #{cId,jdbcType=INTEGER}
+  </select>
+    <select id="list" resultMap="row" parameterType="cost">
+      select
+      <include refid="Base_Column_List" />
+      from w_cost
+      where 1 = 1
+    </select>
+  <select id="checkName" resultMap="row" parameterType="cost">
+    select
+    <include refid="Base_Column_List" />
+    from w_cost
+    where C_name = #{cName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from w_cost
+    where C_id = #{cId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zking.ssm.model.Cost" >
+    insert into w_cost (C_id, C_name, C_standard, 
+      C_bak)
+    values (#{cId,jdbcType=INTEGER}, #{cName,jdbcType=VARCHAR}, #{cStandard,jdbcType=REAL}, 
+      #{cBak,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm.model.Cost" >
+    insert into w_cost
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cId != null" >
+        C_id,
+      </if>
+      <if test="cName != null" >
+        C_name,
+      </if>
+      <if test="cStandard != null" >
+        C_standard,
+      </if>
+      <if test="cBak != null" >
+        C_bak,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cId != null" >
+        #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="cName != null" >
+        #{cName,jdbcType=VARCHAR},
+      </if>
+      <if test="cStandard != null" >
+        #{cStandard,jdbcType=REAL},
+      </if>
+      <if test="cBak != null" >
+        #{cBak,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.ssm.model.Cost" >
+    update w_cost
+    <set >
+      <if test="cName != null" >
+        C_name = #{cName,jdbcType=VARCHAR},
+      </if>
+      <if test="cStandard != null" >
+        C_standard = #{cStandard,jdbcType=REAL},
+      </if>
+      <if test="cBak != null" >
+        C_bak = #{cBak,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where C_id = #{cId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zking.ssm.model.Cost" >
+    update w_cost
+    set C_name = #{cName,jdbcType=VARCHAR},
+      C_standard = #{cStandard,jdbcType=REAL},
+      C_bak = #{cBak,jdbcType=VARCHAR}
+    where C_id = #{cId,jdbcType=INTEGER}
+  </update>
+</mapper>

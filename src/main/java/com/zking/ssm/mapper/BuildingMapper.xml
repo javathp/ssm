@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm.mapper.BuildingMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm.model.Building" >
+    <constructor >
+      <idArg column="B_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="B_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="B_bak" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <resultMap id="row" type="com.zking.ssm.model.Building" >
+      <id column="B_id" property="bId" javaType="java.lang.Integer" />
+      <result column="B_name" property="bName" javaType="java.lang.String" />
+      <result column="B_bak" property="bBak" javaType="java.lang.String" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    B_id, B_name, B_bak
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from w_building
+    where B_id = #{bId,jdbcType=INTEGER}
+  </select>
+    <select id="list" resultMap="row" parameterType="building">
+      SELECT
+      <include refid="Base_Column_List" />
+      FROM w_building
+      WHERE 1=1
+    </select>
+  <select id="checkName" resultMap="row" parameterType="building">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM w_building
+    where B_name=#{bName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from w_building
+    where B_id = #{bId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zking.ssm.model.Building" >
+    insert into w_building (B_id, B_name, B_bak
+      )
+    values (#{bId,jdbcType=INTEGER}, #{bName,jdbcType=VARCHAR}, #{bBak,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm.model.Building" >
+    insert into w_building
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bId != null" >
+        B_id,
+      </if>
+      <if test="bName != null" >
+        B_name,
+      </if>
+      <if test="bBak != null" >
+        B_bak,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bId != null" >
+        #{bId,jdbcType=INTEGER},
+      </if>
+      <if test="bName != null" >
+        #{bName,jdbcType=VARCHAR},
+      </if>
+      <if test="bBak != null" >
+        #{bBak,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.ssm.model.Building" >
+    update w_building
+    <set >
+      <if test="bName != null" >
+        B_name = #{bName,jdbcType=VARCHAR},
+      </if>
+      <if test="bBak != null" >
+        B_bak = #{bBak,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where B_id = #{bId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zking.ssm.model.Building" >
+    update w_building
+    set B_name = #{bName,jdbcType=VARCHAR},
+      B_bak = #{bBak,jdbcType=VARCHAR}
+    where B_id = #{bId,jdbcType=INTEGER}
+  </update>
+</mapper>
