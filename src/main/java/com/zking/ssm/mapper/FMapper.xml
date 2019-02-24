@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm.mapper.FMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm.model.F" >
+    <constructor >
+      <idArg column="fileId" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="fileName" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="fileNum" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+
+  <resultMap id="List" type="com.zking.ssm.model.F" >
+      <id column="fileId" property="fileid" javaType="java.lang.Integer" />
+      <result column="fileName" property="filename" javaType="java.lang.String" />
+      <result column="fileNum" property="filenum" javaType="java.lang.Integer" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    fileId, fileName, fileNum
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from file
+    where fileId = #{fileid,jdbcType=INTEGER}
+  </select>
+    <select id="listF" resultMap="List">
+      select
+      <include refid="Base_Column_List" />
+      from file
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from file
+    where fileId = #{fileid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zking.ssm.model.F" >
+    insert into file (fileId, fileName, fileNum
+      )
+    values (#{fileid,jdbcType=INTEGER}, #{filename,jdbcType=VARCHAR}, #{filenum,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm.model.F" >
+    insert into file
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fileid != null" >
+        fileId,
+      </if>
+      <if test="filename != null" >
+        fileName,
+      </if>
+      <if test="filenum != null" >
+        fileNum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fileid != null" >
+        #{fileid,jdbcType=INTEGER},
+      </if>
+      <if test="filename != null" >
+        #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="filenum != null" >
+        #{filenum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.ssm.model.F" >
+    update file
+    <set >
+      <if test="filename != null" >
+        fileName = #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="filenum != null" >
+        fileNum = #{filenum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where fileId = #{fileid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zking.ssm.model.F" >
+    update file
+    set fileName = #{filename,jdbcType=VARCHAR},
+      fileNum = #{filenum,jdbcType=INTEGER}
+    where fileId = #{fileid,jdbcType=INTEGER}
+  </update>
+</mapper>

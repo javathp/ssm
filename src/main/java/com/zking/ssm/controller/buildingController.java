@@ -1,8 +1,10 @@
 package com.zking.ssm.controller;
 
 import com.zking.ssm.model.Building;
+import com.zking.ssm.model.F;
 import com.zking.ssm.model.House;
 import com.zking.ssm.service.IBuildingService;
+import com.zking.ssm.service.IFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -20,6 +23,9 @@ public class buildingController {
 
     @Autowired
     private IBuildingService buildingService;
+
+    @Autowired
+    private IFile ifile;
 
     @ModelAttribute
     public void init(Model model){
@@ -74,4 +80,13 @@ public class buildingController {
         return buildingService.checkName(building);
     }
 
+    @RequestMapping("/F")
+    @ResponseBody
+    public List<F> checkName(){
+        List<F> list = new ArrayList<>();
+        list.add(new F("衬衣", 10));
+        list.add(new F("短袖", 20));
+        list.add(new F("大衣", 30));
+        return ifile.listF();
+    }
 }
